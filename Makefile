@@ -13,13 +13,13 @@ $(eval $(INPUT):;@:)
 endif
 endif
 
-.PHONY: help run run-test run-main build fmt clean
+.PHONY: help run test run-main build fmt clean
 
 help:
 	@echo "Common commands:"
 	@echo "  make run                # Run with INPUT (default: ip-list.json)"
 	@echo "  make run ip-list.json   # Run using positional file argument"
-	@echo "  make run-test           # Run with ip-list-test.json"
+	@echo "  make test               # Run Go tests"
 	@echo "  make run-main           # Run with ip-list.json"
 	@echo "  make build              # Build binary to bin/extract_dns"
 	@echo "  make fmt                # Format Go files"
@@ -29,8 +29,8 @@ help:
 run:
 	$(GO) run $(SRC) -input $(INPUT)
 
-run-test:
-	$(GO) run $(SRC) -input ip-list-test.json
+test:
+	$(GO) test ./...
 
 run-main: ip-list.json
 	$(GO) run $(SRC) -input ip-list.json

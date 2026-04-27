@@ -4,9 +4,13 @@ Small Go utility to extract a DNS filter list from IP/domain JSON files. Get the
 
 ## What it does
 
-- Always includes three matching TLDs:
+- Always includes these matching TLDs:
   - `ru`
   - `рф`
+  - `moscow`
+  - `москва`
+  - `рус`
+  - `by`
   - `su`
 - Reads all domain names from the `domains` arrays in the input JSON.
 - For domains with a non-matching TLD, adds unique TLD+1 values (for example `vk.com`, `yandex.net`).
@@ -21,7 +25,7 @@ Small Go utility to extract a DNS filter list from IP/domain JSON files. Get the
 Run with flag:
 
 ```bash
-go run extract_dns.go -input ip-list-test.json
+go run extract_dns.go -input ip-list.json
 ```
 
 Run with positional filename:
@@ -35,7 +39,12 @@ go run extract_dns.go ip-list.json
 ```text
 ru
 рф
+moscow
+москва
+рус
+by
 su
+mycdn.me
 vk.com
 yandex.com
 yandex.net
@@ -52,8 +61,8 @@ make help
 
 Common targets:
 
-- `make run` - run using `INPUT` (default: `ip-list-test.json`)
-- `make run-test` - run with `ip-list-test.json`
+- `make run` - run using `INPUT` (default: `ip-list.json`)
+- `make test` - run Go tests
 - `make run-main` - run with `ip-list.json`
 - `make build` - build binary to `bin/extract_dns`
 - `make fmt` - format Go source files

@@ -15,6 +15,8 @@ type entry struct {
 	Domains []string `json:"domains"`
 }
 
+var alwaysTLDs = []string{"ru", "рф", "moscow", "москва", "рус", "by", "su"}
+
 func tldPlusOne(domain string) string {
 	d := strings.TrimSpace(strings.ToLower(domain))
 	d = strings.TrimSuffix(d, ".")
@@ -49,7 +51,14 @@ func main() {
 		os.Exit(1)
 	}
 
-	always := []string{"ru", "рф", "moscow", "москва", "рус", "by", "su"}
+	for _, d := range extractDNS(items) {
+		fmt.Println(d)
+	}
+}
+
+func extractDNS(items map[string]entry) []string {
+	always := alwaysTLDs
+
 	alwaysSet := map[string]struct{}{}
 	for _, tld := range always {
 		punycode, _ := idna.ToASCII(tld)
@@ -82,12 +91,10 @@ func main() {
 	}
 	sort.Strings(result)
 
-	for _, tld := range always {
-		fmt.Println(tld)
-	}
-	for _, d := range result {
-		fmt.Println(d)
-	}
+	out := make([]string, 0, len(always)+len(result))
+	out = append(out, always...)
+	out = append(out, result...)
+	return out
 }
 
 func trimPort(domain string) string {
