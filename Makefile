@@ -3,37 +3,19 @@ APP := extract_dns
 SRC := extract_dns.go
 BIN_DIR := bin
 BIN := $(BIN_DIR)/$(APP)
-INPUT ?= ip-list.json
 
-# Support: make run ip-list.json
-ifeq (run,$(firstword $(MAKECMDGOALS)))
-ifneq ($(word 2,$(MAKECMDGOALS)),)
-INPUT := $(word 2,$(MAKECMDGOALS))
-$(eval $(INPUT):;@:)
-endif
-endif
-
-.PHONY: help run test run-main build fmt clean
+.PHONY: help test build fmt clean refresh
 
 help:
 	@echo "Common commands:"
-	@echo "  make run                # Run with INPUT (default: ip-list.json)"
-	@echo "  make run ip-list.json   # Run using positional file argument"
 	@echo "  make test               # Run Go tests"
-	@echo "  make run-main           # Run with ip-list.json"
 	@echo "  make build              # Build binary to bin/extract_dns"
 	@echo "  make fmt                # Format Go files"
 	@echo "  make clean              # Remove build artifacts"
-	@echo "  make run INPUT=...      # Override input file"
-
-run:
-	$(GO) run $(SRC) -input $(INPUT)
+	@echo "  make refresh            # Build, download IP list, and parse to parsed.txt"
 
 test:
 	$(GO) test ./...
-
-run-main: ip-list.json
-	$(GO) run $(SRC) -input ip-list.json
 
 build:
 	mkdir -p $(BIN_DIR)
@@ -47,3 +29,6 @@ clean:
 
 ip-list.json:
 	curl -o ip-list.json https://russia.iplist.opencck.org/?format=json
+
+refresh: build ip-list.json
+	$(BIN) -input ip-list.json > parsed.txt
