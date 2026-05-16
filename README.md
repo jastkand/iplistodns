@@ -64,6 +64,7 @@ Common targets:
 - `make run` - run using `INPUT` (default: `ip-list.json`)
 - `make test` - run Go tests
 - `make run-main` - run with `ip-list.json`
+- `make run-main -B` - refresh `ip-list.json` and run with it
 - `make build` - build binary to `bin/extract_dns`
 - `make fmt` - format Go source files
 - `make clean` - remove `bin/`
