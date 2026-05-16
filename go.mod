@@ -1,4 +1,4 @@
-module extractdns
+module iplistodns
 
 go 1.25.0
 

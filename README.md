@@ -1,4 +1,4 @@
-# iplisttodns
+# iplistodns
 
 Small Go utility to extract a DNS filter list from IP/domain JSON files. Get the list file from https://russia.iplist.opencck.org/
 

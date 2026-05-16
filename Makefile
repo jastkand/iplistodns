@@ -1,6 +1,6 @@
 GO := go
-APP := extract_dns
-SRC := extract_dns.go
+APP := iplistodns
+SRC := main.go
 BIN_DIR := bin
 BIN := $(BIN_DIR)/$(APP)
 
@@ -9,7 +9,7 @@ BIN := $(BIN_DIR)/$(APP)
 help:
 	@echo "Common commands:"
 	@echo "  make test               # Run Go tests"
-	@echo "  make build              # Build binary to bin/extract_dns"
+	@echo "  make build              # Build binary to bin/iplistodns"
 	@echo "  make fmt                # Format Go files"
 	@echo "  make clean              # Remove build artifacts"
 	@echo "  make refresh            # Build, download IP list, and parse to parsed.txt"
